@@ -17,5 +17,5 @@ public interface RecomendationProxy {
 	public List<Recomendation> getRecomendationsByProduct(@PathVariable("code") String code);
 	
 	@RequestMapping(value = "/api/recomendations/{code}", method = RequestMethod.POST)	
-	public Recomendation addRecomendation(@PathVariable("code") String code, @RequestBody String description);
+	public Recomendation addRecomendation(@PathVariable("code") String code, @RequestBody String message);
 }

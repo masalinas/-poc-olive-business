@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class Recomendation {
-	private String Description;
+	private String message;
 	private LocalDateTime time;
 	private String productCode;
 }

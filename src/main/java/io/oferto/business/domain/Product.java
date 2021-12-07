@@ -7,7 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class Product {
 	private String code;
-	private String Description;
+	private String description;
 	private float price;
 	private boolean active;
 }

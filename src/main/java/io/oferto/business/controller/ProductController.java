@@ -60,10 +60,10 @@ public class ProductController {
     }
 
 	@RequestMapping(value = "/{code}", method = RequestMethod.POST)
-    public Recomendation addRecomendation(@PathVariable("code") String code, @RequestBody String description) throws Exception {
+    public Recomendation addRecomendation(@PathVariable("code") String code, @RequestBody String message) throws Exception {
         log.info("Executing getProduct");
               
-        return recomendationProxy.addRecomendation(code, description);       
+        return recomendationProxy.addRecomendation(code, message);       
     }
 	
 	@PreAuthorize("hasAnyRole('admin','operator')")
