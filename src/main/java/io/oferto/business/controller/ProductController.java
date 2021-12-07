@@ -14,18 +14,25 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.oferto.business.domain.Product;
+import io.oferto.business.domain.Recomendation;
+import io.oferto.business.proxy.RecomendationProxy;
 
 @RestController
 @RequestMapping("api/products")
 public class ProductController {
 	Logger log = LoggerFactory.getLogger(ProductController.class);
 	
+	private final RecomendationProxy recomendationProxy;
+	
+	public ProductController(RecomendationProxy recomendationProxy) {
+		this.recomendationProxy = recomendationProxy;
+	}
+	
 	private List<Product> products = new ArrayList<Product>(
 			Arrays.asList(new Product("001", "Apple", 5, true),
 						  new Product("002", "Banana", 4.3f, false),
 						  new Product("003", "Orange", 3.2f, true)));
 	
-	@PreAuthorize("hasAnyRole('admin','operator', 'user')")
 	@RequestMapping(value = "", method = RequestMethod.GET)
     public List<Product> getProducts() throws Exception {
         log.info("Executing getProducts");
@@ -33,7 +40,6 @@ public class ProductController {
     	return products;
     }
 	
-	@PreAuthorize("hasAnyRole('admin','operator', 'user')")
 	@RequestMapping(value = "/{code}", method = RequestMethod.GET)
     public Product getProduct(@PathVariable("code") String code) throws Exception {
         log.info("Executing getProduct");
@@ -44,6 +50,20 @@ public class ProductController {
         	.orElse(null);
         
     	return product;
+    }
+	
+	@RequestMapping(value = "/{code}/recomendation", method = RequestMethod.GET)
+    public List<Recomendation> getRecomendations(@PathVariable("code") String code) throws Exception {
+        log.info("Executing getProduct");
+              
+        return recomendationProxy.getRecomendationsByProduct(code);       
+    }
+
+	@RequestMapping(value = "/{code}", method = RequestMethod.POST)
+    public Recomendation addRecomendation(@PathVariable("code") String code, @RequestBody String description) throws Exception {
+        log.info("Executing getProduct");
+              
+        return recomendationProxy.addRecomendation(code, description);       
     }
 	
 	@PreAuthorize("hasAnyRole('admin','operator')")

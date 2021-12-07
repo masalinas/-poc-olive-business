@@ -18,10 +18,12 @@
 	
 	<properties>
 		<java.version>11</java.version>
+		<spring-cloud.version>2020.0.4</spring-cloud.version>
 		<keycloak.version>15.0.2</keycloak.version>
 	</properties>
 	
 	<dependencies>
+		<!-- spring boot -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
@@ -48,6 +50,12 @@
 			<scope>test</scope>
 		</dependency>
 		
+		<!-- spring cloud -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency>
+				
 		<!-- keycloak -->
 		<dependency>
 		    <groupId>org.keycloak</groupId>
@@ -64,6 +72,13 @@
 
 	<dependencyManagement>
 	    <dependencies>
+	    	<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>	    
 	        <dependency>
 	            <groupId>org.keycloak.bom</groupId>
 	            <artifactId>keycloak-adapter-bom</artifactId>
