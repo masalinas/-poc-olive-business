@@ -44,7 +44,7 @@ public class ProductController {
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/{code}", method = RequestMethod.GET)
     public Product getProduct(@PathVariable("code") String code) throws Exception {
-        log.info("Executing getProduct");
+        log.info("Executing Get Product");
               
         Product product = products.stream()
         	.filter(entity -> code.equals(entity.getCode()))
@@ -53,27 +53,11 @@ public class ProductController {
         
     	return product;
     }
-	
-	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/{code}/recomendation", method = RequestMethod.GET)
-    public List<Recomendation> getRecomendations(@PathVariable("code") String code) throws Exception {
-        log.info("Executing getProduct");
-              
-        return recomendationProxy.getRecomendationsByProduct(code);       
-    }
-
-	@PreAuthorize("hasAnyRole('admin','operator')")
-	@RequestMapping(value = "/{code}", method = RequestMethod.POST)
-    public Recomendation addRecomendation(@PathVariable("code") String code, @RequestBody String message) throws Exception {
-        log.info("Executing getProduct");
-              
-        return recomendationProxy.addRecomendation(code, message);       
-    }
-	
+		
 	@PreAuthorize("hasAnyRole('admin','operator')")
 	@RequestMapping(value = "", method = RequestMethod.POST)
     public List<Product> createProduct(@RequestBody Product product) throws Exception {
-        log.info("Executing createProduct");
+        log.info("Executing Create Product");
               
         products.add(product);
         
@@ -82,8 +66,8 @@ public class ProductController {
 	
 	@PreAuthorize("hasAnyRole('admin','operator')")
 	@RequestMapping(value = "/{code}", method = RequestMethod.DELETE)
-    public boolean removeProduct(@PathVariable String code) throws Exception {
-        log.info("Executing removeProduct");
+    public boolean deleteProduct(@PathVariable String code) throws Exception {
+        log.info("Executing Delete Product");
               
         Product product = products.stream()
             	.filter(entity -> code.equals(entity.getCode()))
@@ -94,5 +78,21 @@ public class ProductController {
         	return products.remove(product);
         
     	return false;
+    }
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/{code}/recomendation", method = RequestMethod.GET)
+    public List<Recomendation> getRecomendations(@PathVariable("code") String code) throws Exception {
+        log.info("Executing Get Product Recomendations");
+              
+        return recomendationProxy.getRecomendationsByProduct(code);       
+    }
+	
+	@PreAuthorize("hasAnyRole('admin','operator')")
+	@RequestMapping(value = "/{code}", method = RequestMethod.POST)
+    public Recomendation addRecomendation(@PathVariable("code") String code, @RequestBody String message) throws Exception {
+        log.info("Executing Add Product Recomendation");
+              
+        return recomendationProxy.addRecomendation(code, message);       
     }
 }
