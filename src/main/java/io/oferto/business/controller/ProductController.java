@@ -33,6 +33,7 @@ public class ProductController {
 						  new Product("002", "Banana", 4.3f, false),
 						  new Product("003", "Orange", 3.2f, true)));
 	
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "", method = RequestMethod.GET)
     public List<Product> getProducts() throws Exception {
         log.info("Executing getProducts");
@@ -40,6 +41,7 @@ public class ProductController {
     	return products;
     }
 	
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/{code}", method = RequestMethod.GET)
     public Product getProduct(@PathVariable("code") String code) throws Exception {
         log.info("Executing getProduct");
@@ -52,6 +54,7 @@ public class ProductController {
     	return product;
     }
 	
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/{code}/recomendation", method = RequestMethod.GET)
     public List<Recomendation> getRecomendations(@PathVariable("code") String code) throws Exception {
         log.info("Executing getProduct");
@@ -59,6 +62,7 @@ public class ProductController {
         return recomendationProxy.getRecomendationsByProduct(code);       
     }
 
+	@PreAuthorize("hasAnyRole('admin','operator')")
 	@RequestMapping(value = "/{code}", method = RequestMethod.POST)
     public Recomendation addRecomendation(@PathVariable("code") String code, @RequestBody String message) throws Exception {
         log.info("Executing getProduct");
